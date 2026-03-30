@@ -20,15 +20,6 @@
                     <input type="checkbox" id="process-locally-check"> Process Locally
                 </label>
             </div>
-            <div class="option-group">
-                <label for="quality-select">Quality</label>
-                <select id="quality-select">
-                    <option value=""></option>
-                    <option value="command">command</option>
-                    <option value="dictation">dictation</option>
-                    <option value="conversation">conversation</option>
-                </select>
-            </div>
 
             <div class="option-group">
                 <label>Contextual Biasing Phrases</label>
@@ -51,19 +42,27 @@
             <audio id="audio-source" src="recognition_audio.mp3" controls></audio>
 
             <h2>Execute</h2>
-            <button id="start-btn">Start Recognition</button>
-            <button id="stop-btn" disabled>Stop Recognition</button>
+            <p>Start recognition from your microphone.</p>
+            <div class="button-group">
+                <button id="execute-btn">Start recognition from microphone</button>
+            </div>
 
-            <h2>Status</h2>
-            <p id="status-display">Ready</p>
+            <h2>Output</h2>
+            <div id="output" class="output-box">
+                <p>Results will appear here...</p>
+            </div>
         </div>
 
         <div class="column">
-            <h2>Results</h2>
-            <div id="results-container">
-                <!-- Recognition results will be displayed here -->
+            <h2>JavaScript Code</h2>
+            <p>The code below updates as you change the options. You can also edit it directly.</p>
+            <pre><code id="code-display" contenteditable="true">
+                </code></pre>
+            
+            <div class="security-warning">
+                <strong>Security Note:</strong> This playground executes user-edited code.
+                Only run code you understand.
             </div>
-            <button id="clear-btn">Clear Results</button>
         </div>
     </div>
 
