@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all the DOM elements
     const langInput = document.getElementById('lang-input');
     const processLocallyCheck = document.getElementById('process-locally-check');
+    const continuousCheck = document.getElementById('continuous-check');
+    const interimResultsCheck = document.getElementById('interim-results-check');
     const qualitySelect = document.getElementById('quality-select');
     const codeDisplay = document.getElementById('code-display');
     const audioSource = document.getElementById('audio-source');
@@ -36,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateCode() {
         const lang = langInput.value;
         const isProcessLocally = processLocallyCheck.checked;
+        const isContinuous = continuousCheck.checked;
+        const isInterimResults = interimResultsCheck.checked;
         const quality = qualitySelect.value;
 
         const phraseRows = phrasesContainer.querySelectorAll('.phrase-row');
@@ -65,8 +69,8 @@ try {
     // --- Options Set by You ---
     recognition.lang = "${lang}";
     recognition.processLocally = ${isProcessLocally};
-${quality ? '    recognition.quality = "' + quality + '";\n' : ''}    recognition.interimResults = true;
-    recognition.continuous = true;
+${quality ? '    recognition.quality = "' + quality + '";\n' : ''}    recognition.interimResults = ${isInterimResults};
+    recognition.continuous = ${isContinuous};
     recognition.phrases = SpeechRecognitionPhrase ? [
 ${phrasesCode}
     ] : [];
@@ -174,8 +178,8 @@ ${phrasesCode}
             if (qualitySelect.value) {
                 recognition.quality = qualitySelect.value;
             }
-            recognition.interimResults = true;
-            recognition.continuous = true;
+            recognition.interimResults = interimResultsCheck.checked;
+            recognition.continuous = continuousCheck.checked;
             recognition.phrases = phrases;
 
             recognition.onstart = () => {
@@ -268,6 +272,8 @@ ${phrasesCode}
     // Update the code block whenever an option changes
     langInput.addEventListener('input', generateCode);
     processLocallyCheck.addEventListener('input', generateCode);
+    continuousCheck.addEventListener('input', generateCode);
+    interimResultsCheck.addEventListener('input', generateCode);
     qualitySelect.addEventListener('input', generateCode);
     addPhraseBtn.addEventListener('click', createPhraseRow);
 
