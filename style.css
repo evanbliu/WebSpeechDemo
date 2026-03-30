@@ -44,12 +44,33 @@ h2 {
     margin-bottom: 5px;
 }
 
-.option-group input[type="text"] {
+.option-group input[type="text"],
+.option-group select {
     width: 100%;
     padding: 8px;
     box-sizing: border-box; /* Ensures padding doesn't affect width */
     border: 1px solid #ccc;
     border-radius: 4px;
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.option-group select {
+    appearance: none;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    padding-right: 30px;
+    cursor: pointer;
+}
+
+.option-group select:focus,
+.option-group input[type="text"]:focus {
+    outline: none;
+    border-color: #007aff;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
 }
 
 .option-group input[type="checkbox"] {

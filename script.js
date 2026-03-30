@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get all the DOM elements
     const langInput = document.getElementById('lang-input');
     const processLocallyCheck = document.getElementById('process-locally-check');
+    const qualitySelect = document.getElementById('quality-select');
     const codeDisplay = document.getElementById('code-display');
     const audioSource = document.getElementById('audio-source');
     const executeBtn = document.getElementById('execute-btn');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function generateCode() {
         const lang = langInput.value;
         const isProcessLocally = processLocallyCheck.checked;
+        const quality = qualitySelect.value;
 
         const phraseRows = phrasesContainer.querySelectorAll('.phrase-row');
         const phrasesCode = Array.from(phraseRows).map(row => {
@@ -63,7 +65,7 @@ try {
     // --- Options Set by You ---
     recognition.lang = "${lang}";
     recognition.processLocally = ${isProcessLocally};
-    recognition.interimResults = true;
+${quality ? '    recognition.quality = "' + quality + '";\n' : ''}    recognition.interimResults = true;
     recognition.continuous = true;
     recognition.phrases = SpeechRecognitionPhrase ? [
 ${phrasesCode}
@@ -169,6 +171,9 @@ ${phrasesCode}
             // This is more robust than string manipulation.
             recognition.lang = langInput.value;
             recognition.processLocally = processLocallyCheck.checked;
+            if (qualitySelect.value) {
+                recognition.quality = qualitySelect.value;
+            }
             recognition.interimResults = true;
             recognition.continuous = true;
             recognition.phrases = phrases;
@@ -216,8 +221,12 @@ ${phrasesCode}
                 return;
             }
 
-            const availability = await SpeechRecognition.available({ processLocally: true, langs: [lang] });
-            
+            const options = { processLocally: true, langs: [lang] };
+            if (qualitySelect.value) {
+                options.quality = qualitySelect.value;
+            }
+            const availability = await SpeechRecognition.available(options);
+
             outputEl.innerHTML = `<p><strong>Availability for [${lang}]:</strong> ${availability}</p>`;
 
         } catch (e) {
@@ -237,7 +246,11 @@ ${phrasesCode}
                 return;
             }
 
-            const installed = await SpeechRecognition.install({ processLocally: true, langs: [lang] });
+            const options = { processLocally: true, langs: [lang] };
+            if (qualitySelect.value) {
+                options.quality = qualitySelect.value;
+            }
+            const installed = await SpeechRecognition.install(options);
 
             if (installed) {
                 outputEl.innerHTML = `<p><strong>Success!</strong> Model for [${lang}] has been installed.</p>`;
@@ -255,6 +268,7 @@ ${phrasesCode}
     // Update the code block whenever an option changes
     langInput.addEventListener('input', generateCode);
     processLocallyCheck.addEventListener('input', generateCode);
+    qualitySelect.addEventListener('input', generateCode);
     addPhraseBtn.addEventListener('click', createPhraseRow);
 
     // Attach event listeners
