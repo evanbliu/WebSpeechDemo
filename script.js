@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const processLocallyCheck = document.getElementById('process-locally-check');
     const continuousCheck = document.getElementById('continuous-check');
     const interimResultsCheck = document.getElementById('interim-results-check');
+    const unspokenPunctuationCheck = document.getElementById('unspoken-punctuation-check');
     const qualitySelect = document.getElementById('quality-select');
     const codeDisplay = document.getElementById('code-display');
     const audioSource = document.getElementById('audio-source');
@@ -277,6 +278,7 @@ ${phrasesCode}
     processLocallyCheck.addEventListener('input', generateCode);
     continuousCheck.addEventListener('input', generateCode);
     interimResultsCheck.addEventListener('input', generateCode);
+    unspokenPunctuationCheck.addEventListener('input', generateCode);
     qualitySelect.addEventListener('input', generateCode);
     addPhraseBtn.addEventListener('click', createPhraseRow);
 
