@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const isProcessLocally = processLocallyCheck.checked;
         const isContinuous = continuousCheck.checked;
         const isInterimResults = interimResultsCheck.checked;
+        const isUnspokenPunctuation = unspokenPunctuationCheck.checked;
         const quality = qualitySelect.value;
 
         const phraseRows = phrasesContainer.querySelectorAll('.phrase-row');
@@ -71,6 +72,7 @@ try {
     recognition.processLocally = ${isProcessLocally};
 ${quality ? '    recognition.quality = "' + quality + '";\n' : ''}    recognition.interimResults = ${isInterimResults};
     recognition.continuous = ${isContinuous};
+    recognition.unspokenPunctuation = ${isUnspokenPunctuation};
     recognition.phrases = SpeechRecognitionPhrase ? [
 ${phrasesCode}
     ] : [];
@@ -181,6 +183,7 @@ ${phrasesCode}
             recognition.interimResults = interimResultsCheck.checked;
             recognition.continuous = continuousCheck.checked;
             recognition.phrases = phrases;
+            recognition.unspokenPunctuation = unspokenPunctuationCheck.checked;
 
             recognition.onstart = () => {
                 output.innerHTML = "<p>Listening to audio track...</p>";
